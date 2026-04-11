@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:#0F172A;font-size:15px;line-height:1.6}
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid #E2E8F0;padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:500;color:#0A1628;font-size:15px;text-decoration:none}
+.logo-box{width:28px;height:28px;background:#0A1628;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.logo-box svg{width:14px;height:14px;color:white}
+.badge{background:#F1F5F9;color:#475569;font-size:11px;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace}
+.hero{background:#0A1628;padding:80px 48px 72px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(37,99,235,0.25),transparent 70%);pointer-events:none}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.25);color:#38BDF8;font-size:12px;padding:4px 14px;border-radius:20px;margin-bottom:28px;font-family:'DM Mono',monospace}
+.tag::before{content:'';width:6px;height:6px;border-radius:50%;background:#38BDF8}
+.hero h1{font-size:46px;font-weight:300;color:#fff;line-height:1.15;margin-bottom:18px;letter-spacing:-1px}
+.hero h1 strong{font-weight:500}
+.hero p{color:#94A3B8;font-size:16px;max-width:480px;margin:0 auto 40px;line-height:1.7}
+.actions{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn-dl{display:inline-flex;align-items:center;gap:9px;background:#fff;color:#0A1628;font-size:14px;font-weight:500;padding:13px 26px;border-radius:10px;text-decoration:none;border:none;cursor:pointer}
+.btn-dl svg{width:15px;height:15px}
+.btn-sec{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#94A3B8;font-size:14px;padding:13px 20px;border-radius:10px;text-decoration:none;border:1px solid rgba(255,255,255,0.15);cursor:pointer}
+.ver{margin-top:20px;font-family:'DM Mono',monospace;font-size:12px;color:#475569}
+.stats{border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;display:grid;grid-template-columns:repeat(3,1fr)}
+.stat{padding:28px 40px;text-align:center;border-right:1px solid #E2E8F0}
+.stat:last-child{border-right:none}
+.stat-n{font-size:28px;font-weight:500;color:#0A1628;display:block;margin-bottom:4px}
+.stat-l{font-size:13px;color:#94A3B8}
+.section{padding:72px 48px;text-align:center}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:#2563EB;margin-bottom:10px;font-family:'DM Mono',monospace}
+.section h2{font-size:28px;font-weight:400;color:#0A1628;margin-bottom:8px;letter-spacing:-0.5px}
+.section-sub{font-size:15px;color:#94A3B8;margin-bottom:48px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:0 auto}
+.fc{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:24px;text-align:left}
+.fi{width:40px;height:40px;background:#EFF6FF;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.fi svg{width:18px;height:18px;color:#2563EB}
+.fc h3{font-size:14px;font-weight:500;color:#0A1628;margin-bottom:6px}
+.fc p{font-size:13px;color:#475569;line-height:1.55}
+.steps-bg{background:#F8FAFC}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:900px;margin:0 auto;position:relative}
+.steps::before{content:'';position:absolute;top:16px;left:12%;right:12%;height:1px;background:#E2E8F0;z-index:0}
+.step{text-align:center;padding:0 16px;position:relative;z-index:1}
+.sn{width:32px;height:32px;border-radius:50%;background:#0A1628;color:#fff;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'DM Mono',monospace}
+.step h4{font-size:13px;font-weight:500;color:#0A1628;margin-bottom:6px}
+.step p{font-size:12px;color:#475569;line-height:1.5}
+.req-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:600px;margin:0 auto}
+.ri{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#475569;background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px}
+.ri svg{width:14px;height:14px;color:#2563EB;flex-shrink:0;margin-top:2px}
+footer{border-top:1px solid #E2E8F0;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;background:#F8FAFC}
+footer p{font-size:13px;color:#94A3B8}
+.fdot{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#94A3B8;font-family:'DM Mono',monospace}
+.fdot::before{content:'';width:6px;height:6px;border-radius:50%;background:#22C55E}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-box">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <rect x="1" y="1" width="12" height="12" rx="2"/><path d="M4 5h6M4 7.5h4M4 10h5"/>
+      </svg>
+    </div>
+    Invoice Tool
+    <span class="badge">v1.0</span>
+  </a>
+  <a href="mailto:it@company.com" style="font-size:14px;color:#475569;text-decoration:none">Liên hệ hỗ trợ</a>
+</nav>
+
+<section class="hero">
+  <div class="tag">Công cụ nội bộ · Chỉ dành cho nhân viên</div>
+  <h1>Đối soát hóa đơn<br><strong>tự động, chính xác</strong></h1>
+  <p>Trích xuất dữ liệu từ PDF hóa đơn và so khớp với GRPO từ SAP — không cần thao tác thủ công.</p>
+  <div class="actions">
+    <button class="btn-dl">
+      <svg viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M7.5 2v8M4.5 7l3 3 3-3M2 12h11"/>
+      </svg>
+      Tải về Windows (.exe)
+    </button>
+    <button class="btn-sec">Xem hướng dẫn</button>
+  </div>
+  <div class="ver">Phiên bản mới nhất · Cập nhật tự động khi chạy</div>
+</section>
+
+<div class="stats">
+  <div class="stat"><span class="stat-n">4</span><span class="stat-l">Tiêu chí đối soát</span></div>
+  <div class="stat"><span class="stat-n">10+</span><span class="stat-l">Định dạng hóa đơn hỗ trợ</span></div>
+  <div class="stat"><span class="stat-n">SAP</span><span class="stat-l">Xuất file upload trực tiếp</span></div>
+</div>
+
+<section class="section">
+  <div class="eyebrow">Tính năng</div>
+  <h2>Mọi thứ bạn cần cho AP Invoice</h2>
+  <p class="section-sub">Được thiết kế riêng cho quy trình nội bộ</p>
+  <div class="features">
+    <div class="fc">
+      <div class="fi"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="2" width="14" height="14" rx="2"/><path d="M5 7h8M5 10h5"/></svg></div>
+      <h3>Đọc hóa đơn PDF</h3>
+      <p>Tự động trích xuất MST, serial, items, tổng tiền từ hóa đơn nhiều định dạng và nhà cung cấp.</p>
+    </div>
+    <div class="fc">
+      <div class="fi"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><path d="M6 9l2 2 4-4"/></svg></div>
+      <h3>Đối soát GRPO tự động</h3>
+      <p>So khớp theo 4 yếu tố: vendor code, store, số lượng item, tổng tiền. Phân loại Matched / Partial / No Match.</p>
+    </div>
+    <div class="fc">
+      <div class="fi"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="4" width="14" height="11" rx="1.5"/><path d="M6 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1M7 9h4M7 12h2"/></svg></div>
+      <h3>Xuất báo cáo & SAP upload</h3>
+      <p>Export Excel báo cáo đối soát và file chuẩn upload SAP cho các hóa đơn đã matched.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section steps-bg" id="howto">
+  <div class="eyebrow">Hướng dẫn</div>
+  <h2>4 bước đơn giản</h2>
+  <p class="section-sub">Không cần cài đặt, không cần kỹ thuật</p>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h4>Tải về & chạy</h4><p>Download file .exe, double-click để mở — không cần cài đặt thêm gì</p></div>
+    <div class="step"><div class="sn">2</div><h4>Convert PDF</h4><p>Chọn thư mục hóa đơn, nhấn Run để trích xuất tự động</p></div>
+    <div class="step"><div class="sn">3</div><h4>Đối soát GRPO</h4><p>Tải file GRPO từ SAP, chạy so khớp tự động trong vài giây</p></div>
+    <div class="step"><div class="sn">4</div><h4>Xuất kết quả</h4><p>Export Excel và file upload SAP cho các hóa đơn matched</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="eyebrow">Yêu cầu</div>
+  <h2>Tương thích máy tính nội bộ</h2>
+  <p class="section-sub" style="margin-bottom:32px"></p>
+  <div class="req-grid">
+    <div class="ri"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M7 1l1.5 4.5H13L9.5 8l1.5 4.5L7 10l-4 2.5L4.5 8 1 5.5h4.5z"/></svg>Windows 10 / 11 (64-bit)</div>
+    <div class="ri"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7" cy="7" r="6"/><path d="M7 4v3l2 1"/></svg>Kết nối internet để cập nhật</div>
+    <div class="ri"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7l2 2 4-4"/><rect x="1" y="1" width="12" height="12" rx="2"/></svg>Không cần cài Python hay phần mềm phụ</div>
+    <div class="ri"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="3" width="12" height="9" rx="1.5"/><path d="M5 3V2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1"/></svg>File VendorInfo.csv & InvInfo.csv từ SAP</div>
+  </div>
+</section>
+
+<footer>
+  <p>Invoice Tool · Chỉ dùng nội bộ · © 2026</p>
+  <span class="fdot">Đang hoạt động</span>
+</footer>
+
+</body>
+</html>
